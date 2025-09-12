@@ -1,6 +1,7 @@
 Pre-Training and Fine-Tuning with PyTorch
 
 This repository contains a Jupyter Notebook that demonstrates how to pretrain and fine-tune transformer-based neural networks in PyTorch.
+
 The lab focuses on building a recommender system for a streaming service using movie reviews as the target dataset, while leveraging transfer learning from a larger dataset of magazine articles.
 
 📌 Overview
@@ -8,21 +9,15 @@ The lab focuses on building a recommender system for a streaming service using m
 Fine-tuning a pretrained model can be approached in different ways:
 
 Training only on the small movie review dataset
-
 ✅ Tailored to the dataset
-
 ⚠️ Risk of overfitting due to limited data
 
 Pretraining on a general large dataset, then fine-tuning all parameters
-
 ✅ Improves accuracy on the target task
-
 ⚠️ Computationally expensive and may still overfit
 
 Fine-tuning only the final layer
-
 ✅ Efficient and reduces overfitting
-
 ⚠️ Limited adaptation to domain-specific patterns
 
 This notebook walks through all these strategies step by step.
