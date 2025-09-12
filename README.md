@@ -96,13 +96,7 @@ Copy code
 jupyter notebook
 Open Lab_Pre_training_and_Fine_Tuning_with_PyTorch.ipynb and follow the steps in order.
 
-To commit this README into your local repo:
 
-bash
-Copy code
-git add README.md
-git commit -m "Add formatted README"
-git push origin main
 📊 Datasets
 IMDB Dataset: Movie reviews for fine-tuning.
 
