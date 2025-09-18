@@ -1,105 +1,57 @@
-# Pre-Training and Fine-Tuning with PyTorch
+# README
 
-This repository contains a Jupyter Notebook that demonstrates how to **pretrain and fine-tune transformer-based neural networks in PyTorch**.
+## Introduction
+This project explores **Pre-Training and Fine-Tuning with PyTorch** using transformer-based models.  
+The task simulates building a **recommender system for a streaming platform** based on **movie reviews**. Since the dataset of reviews is relatively small, the strategy leverages transfer learning:
 
-The lab focuses on building a recommender system for a streaming service using **movie reviews** as the target dataset, while leveraging **transfer learning** from a larger dataset of magazine articles.
+1. **Pre-training** on a larger general-domain dataset (e.g., magazine articles or AG News) to capture broad language patterns.  
+2. **Fine-tuning** on the smaller IMDB dataset to specialize in sentiment and movie-review-specific nuances.  
 
----
-
-## 📌 Overview
-
-Fine-tuning a pretrained model can be approached in different ways:
-
-- **Training only on the small movie review dataset**
-    - ✅ Tailored to the dataset
-    - ⚠️ Risk of overfitting due to limited data
-
-- **Pretraining on a general large dataset, then fine-tuning all parameters**
-    - ✅ Improves accuracy on the target task
-    - ⚠️ Computationally expensive and may still overfit
-
-- **Fine-tuning only the final layer**
-    - ✅ Efficient and reduces overfitting
-    - ⚠️ Limited adaptation to domain-specific patterns
-
-This notebook walks through all these strategies step by step.
+This two-step training approach balances **generalization** and **task-specific adaptation**, making it especially effective when data is limited.
 
 ---
 
-## 🎯 Objectives
+## Implementation
+1. **Setup & Dependencies**  
+   - Installed required libraries (`torch`, `torchtext`, `transformers`, etc.).  
+   - Defined helper functions for plotting, saving, and loading models.  
 
-By the end of this lab, you will be able to:
+2. **Positional Encodings**  
+   - Implemented positional encoding to preserve word order in sequences, which transformers need to differentiate between sentences with the same tokens but different meanings.  
 
-- Define and pretrain a transformer-based neural network using **PyTorch**.
-- Fully fine-tune the pretrained model for a **different classification task**.
-- Compare results by fine-tuning only the **last layer** of the pretrained model.
-- Experiment with **unfreezing specific layers** for controlled fine-tuning.
+3. **Dataset Preparation**  
+   - Loaded and preprocessed the **IMDB dataset**.  
+   - Created dataset splits (train/test) and built PyTorch DataLoaders for efficient batching.  
 
----
+4. **Model Training Strategies**  
+   - **Training from scratch** on IMDB (to observe overfitting risks with small datasets).  
+   - **Full fine-tuning** of a model pretrained on AG News.  
+   - **Fine-tuning the final layer only**, keeping earlier layers frozen to reduce compute and overfitting.  
+   - **Exercise:** selectively unfreezing specific layers for controlled fine-tuning.  
 
-## 📂 Table of Contents
-
-1. **Objectives**
-2. **Setup**
-    - Install required libraries
-    - Import required libraries
-    - Define helper functions
-3. **Positional Encodings**
-4. **IMDB Dataset**
-    - Overview
-    - Dataset composition
-    - Applications
-    - Challenges
-    - Dataset splits
-    - Data loader
-    - Neural network
-5. **Training**
-    - Train on IMDB dataset
-    - Fine-tune a model pretrained on AG News dataset
-    - Fine-tune the final layer only
-6. **Exercise:** Unfreeze specific layers for fine-tuning
+5. **Evaluation**  
+   - Compared results across different fine-tuning strategies.  
+   - Analyzed training/validation loss and accuracy to understand trade-offs.  
 
 ---
 
-## ⚙️ Setup
+## Results
+- **Training from Scratch**: The model overfit quickly due to the small dataset size.  
+- **Full Fine-Tuning**: Provided the best adaptation to the IMDB dataset but required more compute and posed some overfitting risk.  
+- **Final Layer Fine-Tuning**: Efficient, less prone to overfitting, but with slightly reduced accuracy compared to full fine-tuning.  
+- **Layer-Unfreezing Strategy**: Balanced efficiency and accuracy by adapting deeper model layers only where necessary.  
 
-### 1) Install required libraries
+---
 
-Run these commands in your terminal or inside a notebook cell (prepend `!` in notebooks if desired):
+## Conclusion
+This project demonstrates the power of transfer learning with PyTorch. By pretraining on a large general-domain dataset and fine-tuning on a smaller domain-specific dataset, the model achieves strong performance without requiring massive amounts of labeled data.
 
-```bash
-pip install torch torchvision torchaudio
-pip install matplotlib seaborn
-pip install scikit-learn
-2) Import required libraries
-Import libraries at the top of the notebook before running code cells. Example:
+**Key takeaways**:
 
-python
-Copy code
-import torch
-import torch.nn as nn
-from torch.utils.data import DataLoader
-3) Helper functions
-The notebook includes helper functions for tokenization, dataset preparation, and training loops. Follow the notebook cells to see how they are defined and used.
+- Pretraining captures general language structure.
 
-🚀 Usage
-Clone this repository:
+- Fine-tuning adapts the model to the target task.
 
-bash
-Copy code
-git clone https://github.com/khawagaa/Pre-training-and-fine-tuning-with-pytorch.git
-cd Pre-training-and-fine-tuning-with-pytorch
-Launch Jupyter Notebook:
+- Strategies such as final-layer fine-tuning and partial layer unfreezing balance accuracy, efficiency, and overfitting risks.
 
-bash
-Copy code
-jupyter notebook
-Open Lab_Pre_training_and_Fine_Tuning_with_PyTorch.ipynb and follow the steps in order.
-
-
-📊 Datasets
-IMDB Dataset: Movie reviews for fine-tuning.
-
-AG News Dataset: Large text dataset for pretraining.
-
-Both datasets are automatically downloaded via PyTorch's torchtext or other dataset utilities used in the notebook.
+This methodology is widely applicable to real-world NLP tasks where labeled data is limited but pretrained models are available.
